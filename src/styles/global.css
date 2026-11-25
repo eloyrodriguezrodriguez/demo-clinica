@@ -1,5 +1,11 @@
 @import "tailwindcss";
 
+/* ── Estilos de cada componente, en el orden de la página ── */
+@import "./components/header.css";
+@import "./components/hero.css";
+@import "./components/confianza.css";
+@import "./components/sobre-nosotros.css";
+
 @theme {
   /* ── Paleta ── */
   --color-primario: #1e3a5f;
@@ -15,8 +21,9 @@
   --font-sans: "Inter Variable", system-ui, sans-serif;
   --font-titulo: "Lora Variable", Georgia, serif;
 
-  /* ── Espaciado de secciones (crea py-seccion, pt-seccion…) ── */
+  /* ── Espaciado (crea py-seccion, py-franja…) ── */
   --spacing-seccion: 6rem;
+  --spacing-franja: 3rem;
 }
 
 @layer base {
@@ -26,6 +33,7 @@
     --elevacion: -2px;
     --duracion: 250ms;
     --curva: cubic-bezier(0.22, 1, 0.36, 1);
+    --sombra-hover: 0 6px 16px -6px rgb(30 58 95 / 0.35);
   }
 
   html {
@@ -45,6 +53,10 @@
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
   }
+    /* ── Etiqueta encima del título de cada sección ── */
+  .etiqueta {
+    @apply text-sm font-semibold tracking-wide text-texto-suave;
+  }
 
   /* Escala de títulos: una sola para toda la web */
   h1,
@@ -58,7 +70,7 @@
   }
 
   h1 {
-    font-size: clamp(2.25rem, 5vw, 3.75rem);
+    font-size: clamp(2.25rem, 4.5vw, 3.5rem);
   }
   h2 {
     font-size: clamp(1.875rem, 3.5vw, 2.75rem);
@@ -139,44 +151,38 @@
     transform: scaleX(1);
   }
 
-  /* ════════ Variantes de componentes ════════ */
+  /* ── Entrada: aparece de abajo arriba al entrar en pantalla ── */
+  .js .aparecer {
+    opacity: 0;
+    transform: translateY(1rem);
+    transition:
+      opacity var(--duracion-entrada) var(--curva),
+      transform var(--duracion-entrada) var(--curva);
+    transition-delay: var(--retraso, 0ms);
+  }
 
-  /* ── Botón principal ── */
+  .js .aparecer.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .js .aparecer {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+
+  /* ════════ Estilos compartidos entre componentes ════════ */
+
+  /* ── Botón principal: header, hero y cita ── */
   .boton-principal {
     @apply whitespace-nowrap rounded-full bg-primario px-4 font-semibold text-white hover:bg-primario-hover md:px-6;
   }
 
-  /* ════════ Header ════════ */
-
-  .header {
-    @apply border-b border-borde bg-fondo;
-  }
-
-  .header-contenido {
-    @apply flex h-(--altura-header) items-center justify-between gap-8;
-  }
-
-  .logo {
-    @apply flex items-center gap-3;
-  }
-
-  .logo-imagen {
-    @apply size-10;
-  }
-
-  .logo-nombre {
-    @apply font-titulo whitespace-nowrap text-xl font-semibold text-primario;
-  }
-
-  .nav {
-    @apply hidden md:block;
-  }
-
-  .nav-lista {
-    @apply flex items-center gap-8;
-  }
-
-  .nav-enlace {
-    @apply text-texto hover:text-primario;
+  /* ── Botón secundario: misma forma, solo borde ── */
+  .boton-secundario {
+    @apply whitespace-nowrap rounded-full border border-primario bg-transparent px-4 font-semibold text-primario hover:bg-franja md:px-6;
   }
 }

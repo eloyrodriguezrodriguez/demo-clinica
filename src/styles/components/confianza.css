@@ -1,0 +1,36 @@
+/* ════════ Confianza ════════ */
+/* Componente: src/components/secciones/Confianza.astro */
+
+@layer components {
+  .confianza {
+    @apply bg-franja py-franja;
+  }
+
+  .confianza-lista {
+    @apply grid gap-6 md:grid-cols-3 md:gap-10;
+  }
+
+  .confianza-item {
+    @apply flex items-start gap-4;
+  }
+
+  .confianza-icono {
+    @apply flex size-12 shrink-0 items-center justify-center rounded-full bg-superficie text-primario;
+  }
+
+  .confianza-titulo {
+    @apply font-semibold text-primario;
+  }
+
+  .confianza-texto {
+    @apply mt-1 text-sm text-texto-suave;
+  }
+
+    @media (hover: hover) {
+    .confianza-item:hover .confianza-icono {
+      box-shadow: var(--sombra-hover);
+    }
+  }
+
+
+}

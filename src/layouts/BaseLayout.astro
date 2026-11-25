@@ -15,6 +15,9 @@ const { titulo = negocio.nombre } = Astro.props;
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
+    <script is:inline>
+      document.documentElement.classList.add("js");
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{titulo}</title>
   </head>
@@ -23,5 +26,20 @@ const { titulo = negocio.nombre } = Astro.props;
     <main>
       <slot />
     </main>
+    <script>
+      const elementos = document.querySelectorAll(".aparecer");
+      const observador = new IntersectionObserver(
+        (entradas) => {
+          entradas.forEach((entrada) => {
+            if (entrada.isIntersecting) {
+              entrada.target.classList.add("visible");
+              observador.unobserve(entrada.target);
+            }
+          });
+        },
+        { threshold: 0.15 },
+      );
+      elementos.forEach((el) => observador.observe(el));
+    </script>
   </body>
 </html>

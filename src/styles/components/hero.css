@@ -1,0 +1,51 @@
+/* ════════ Hero ════════ */
+/* Componente: src/components/secciones/Hero.astro */
+
+@layer components {
+  .hero {
+    @apply py-seccion;
+  }
+
+  .hero-titulo {
+    text-wrap: pretty;
+  }
+  
+  .hero-contenido {
+    @apply grid items-center gap-12 md:grid-cols-[2fr_1fr];
+  }
+
+  .hero-texto {
+    @apply flex flex-col gap-6;
+  }
+
+  .hero-subtitulo {
+    @apply max-w-[65ch] text-lg text-texto-suave;
+  }
+
+  .hero-acciones {
+    @apply flex flex-wrap items-center gap-4;
+  }
+
+  .hero-enlace {
+    @apply self-start font-medium text-primario;
+  }
+
+  .hero-enlace-icono {
+    @apply ml-1 inline align-[-3px];
+    transition: transform var(--duracion) var(--curva);
+  }
+
+  .hero-media {
+    @apply w-full max-w-md md:justify-self-end;
+  }
+
+  .hero-imagen {
+    @apply aspect-[4/5] w-full rounded-2xl object-cover;
+  }
+
+  @media (hover: hover) {
+    .hero-enlace:hover .hero-enlace-icono {
+      transform: translateX(3px);
+    }
+  }
+}

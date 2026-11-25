@@ -1,0 +1,32 @@
+---
+import { Icon } from "astro-icon/components";
+import Contenedor from "../ui/Contenedor.astro";
+import { negocio } from "../../data/negocio";
+
+const { confianza } = negocio;
+---
+
+<section class="confianza" aria-labelledby="confianza-titulo">
+  <Contenedor>
+    <h2 id="confianza-titulo" class="sr-only">
+      {confianza.titulo}
+    </h2>
+
+    <ul class="confianza-lista">
+      {confianza.razones.map((razon, i) => (
+        <li
+          class="confianza-item grupo-icono aparecer"
+          style={`--retraso: ${i * 120}ms`}
+        >
+          <span class="confianza-icono icono">
+            <Icon name={razon.icono} size={24} aria-hidden="true" />
+          </span>
+          <div>
+            <p class="confianza-titulo">{razon.titulo}</p>
+            <p class="confianza-texto">{razon.texto}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </Contenedor>
+</section>

@@ -1,0 +1,36 @@
+/* ════════ Sobre nosotros ════════ */
+/* Componente: src/components/secciones/SobreNosotros.astro */
+
+@layer components {
+  .sobre {
+    @apply py-seccion;
+  }
+
+  .sobre-contenido {
+    @apply grid items-center gap-12 md:grid-cols-2;
+  }
+
+  .sobre-imagen {
+    @apply aspect-[5/4] w-full rounded-2xl object-cover;
+  }
+
+  .sobre-texto {
+    @apply flex flex-col gap-5;
+  }
+
+  .sobre-parrafo {
+    @apply max-w-[60ch] text-texto-suave;
+  }
+
+  .sobre-cifras {
+    @apply grid grid-cols-3 gap-6 border-t border-borde pt-6;
+  }
+
+  .sobre-cifra-valor {
+    @apply font-titulo text-3xl font-semibold text-primario;
+  }
+
+  .sobre-cifra-texto {
+    @apply text-sm text-texto-suave;
+  }
+}

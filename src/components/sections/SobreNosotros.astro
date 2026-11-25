@@ -1,0 +1,38 @@
+---
+import { Image } from "astro:assets";
+import Contenedor from "../ui/Contenedor.astro";
+import { negocio } from "../../data/negocio";
+
+const { sobreNosotros } = negocio;
+---
+
+<section id="sobre-nosotros" class="sobre" aria-labelledby="sobre-titulo">
+  <Contenedor class="sobre-contenido">
+
+    <div class="sobre-media">
+      <Image
+        src={sobreNosotros.imagen}
+        alt={sobreNosotros.alt}
+        widths={[480, 720, 960]}
+        sizes="(min-width: 768px) 50vw, 100vw"
+        class="sobre-imagen"
+      />
+    </div>
+
+    <div class="sobre-texto">
+      <span class="etiqueta">{sobreNosotros.etiqueta}</span>
+      <h2 id="sobre-titulo">{sobreNosotros.titulo}</h2>
+      <p class="sobre-parrafo">{sobreNosotros.texto}</p>
+
+      <ul class="sobre-cifras">
+        {sobreNosotros.cifras.map((cifra) => (
+          <li>
+            <p class="sobre-cifra-valor">{cifra.valor}</p>
+            <p class="sobre-cifra-texto">{cifra.texto}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+  </Contenedor>
+</section>

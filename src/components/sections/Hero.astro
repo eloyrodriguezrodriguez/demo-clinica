@@ -1,0 +1,45 @@
+---
+import { Image } from "astro:assets";
+import { Icon } from "astro-icon/components";
+import Contenedor from "../ui/Contenedor.astro";
+import { negocio } from "../../data/negocio";
+
+const { hero, cta } = negocio;
+---
+
+<section class="hero" aria-labelledby="hero-titulo">
+  <Contenedor class="hero-contenido">
+
+    <!-- Hijo 1: todo el texto -->
+    <div class="hero-texto">
+      <h1 id="hero-titulo" class="hero-titulo">{hero.titulo}</h1>
+      <p class="hero-subtitulo">{hero.subtitulo}</p>
+
+      <div class="hero-acciones">
+        <a href={cta.href} class="boton boton-principal">{cta.texto}</a>
+        <a href={hero.secundario.href} class="boton boton-secundario">
+          {hero.secundario.texto}
+        </a>
+      </div>
+
+      <a href={hero.equipo.href} class="enlace hero-enlace">
+        {hero.equipo.texto}
+        <Icon name="tabler:arrow-right" size={18} class="hero-enlace-icono" aria-hidden="true" />
+      </a>
+    </div>
+
+    <!-- Hijo 2: la foto -->
+    <div class="hero-media">
+      <Image
+        src={hero.imagen}
+        alt={hero.alt}
+        widths={[480, 720, 960]}
+        sizes="(min-width: 768px) 40vw, 100vw"
+        loading="eager"
+        fetchpriority="high"
+        class="hero-imagen"
+      />
+    </div>
+
+  </Contenedor>
+</section>
