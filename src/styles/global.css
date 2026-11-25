@@ -1,1 +1,182 @@
 @import "tailwindcss";
+
+@theme {
+  /* ── Paleta ── */
+  --color-primario: #1e3a5f;
+  --color-primario-hover: #152b47;
+  --color-fondo: #f7f9fc;
+  --color-franja: #e3ecf5;
+  --color-superficie: #ffffff;
+  --color-texto: #1b2430;
+  --color-texto-suave: #4a5a70;
+  --color-borde: #cbd8e6;
+
+  /* ── Tipografía ── */
+  --font-sans: "Inter Variable", system-ui, sans-serif;
+  --font-titulo: "Lora Variable", Georgia, serif;
+
+  /* ── Espaciado de secciones (crea py-seccion, pt-seccion…) ── */
+  --spacing-seccion: 6rem;
+}
+
+@layer base {
+  /* Variables propias: siempre existen, se usen o no en clases */
+  :root {
+    --altura-header: 5rem;
+    --elevacion: -2px;
+    --duracion: 250ms;
+    --curva: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: calc(var(--altura-header) + 1rem);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  body {
+    background-color: var(--color-fondo);
+    color: var(--color-texto);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Escala de títulos: una sola para toda la web */
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-titulo);
+    font-weight: 600;
+    color: var(--color-primario);
+    line-height: 1.15;
+    text-wrap: balance;
+  }
+
+  h1 {
+    font-size: clamp(2.25rem, 5vw, 3.75rem);
+  }
+  h2 {
+    font-size: clamp(1.875rem, 3.5vw, 2.75rem);
+  }
+  h3 {
+    font-size: 1.375rem;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-primario);
+    outline-offset: 3px;
+  }
+}
+
+@layer components {
+  /* ════════ Comportamientos comunes ════════ */
+
+  /* ── Botones: suben al pasar el ratón ── */
+  .boton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.75rem;
+    transition:
+      transform var(--duracion) var(--curva),
+      box-shadow var(--duracion) var(--curva),
+      background-color var(--duracion) var(--curva);
+  }
+
+  /* ── Iconos: mismo movimiento que los botones ── */
+  .icono {
+    display: inline-flex;
+    transition: transform var(--duracion) var(--curva);
+  }
+
+  @media (hover: hover) {
+    .boton:hover {
+      transform: translateY(var(--elevacion));
+      box-shadow: 0 6px 16px -6px rgb(30 58 95 / 0.35);
+    }
+    .icono:hover,
+    .grupo-icono:hover .icono {
+      transform: translateY(var(--elevacion));
+    }
+  }
+
+  .boton:focus-visible {
+    transform: translateY(var(--elevacion));
+  }
+
+  .boton:active {
+    transform: translateY(0);
+    box-shadow: none;
+  }
+
+  /* ── Enlaces: línea que nace en el centro ── */
+  .enlace {
+    position: relative;
+    display: inline-block;
+  }
+
+  .enlace::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -0.25rem;
+    height: 1.5px;
+    background-color: currentColor;
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform var(--duracion) var(--curva);
+  }
+
+  .enlace:hover::after,
+  .enlace:focus-visible::after,
+  .enlace[aria-current="page"]::after {
+    transform: scaleX(1);
+  }
+
+  /* ════════ Variantes de componentes ════════ */
+
+  /* ── Botón principal ── */
+  .boton-principal {
+    @apply whitespace-nowrap rounded-full bg-primario px-4 font-semibold text-white hover:bg-primario-hover md:px-6;
+  }
+
+  /* ════════ Header ════════ */
+
+  .header {
+    @apply border-b border-borde bg-fondo;
+  }
+
+  .header-contenido {
+    @apply flex h-(--altura-header) items-center justify-between gap-8;
+  }
+
+  .logo {
+    @apply flex items-center gap-3;
+  }
+
+  .logo-imagen {
+    @apply size-10;
+  }
+
+  .logo-nombre {
+    @apply font-titulo whitespace-nowrap text-xl font-semibold text-primario;
+  }
+
+  .nav {
+    @apply hidden md:block;
+  }
+
+  .nav-lista {
+    @apply flex items-center gap-8;
+  }
+
+  .nav-enlace {
+    @apply text-texto hover:text-primario;
+  }
+}

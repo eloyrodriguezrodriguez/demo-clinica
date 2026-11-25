@@ -1,0 +1,29 @@
+---
+import Contenedor from "../ui/Contenedor.astro";
+import { negocio } from "../../data/negocio";
+---
+
+<header class="header">
+  <Contenedor class="header-contenido">
+
+    <a href="/" class="logo">
+      <img src={negocio.logo} alt="" width="40" height="40" class="logo-imagen" />
+      <span class="logo-nombre">{negocio.nombre}</span>
+    </a>
+
+    <nav aria-label="Principal" class="nav">
+      <ul class="nav-lista">
+        {negocio.navegacion.map((enlace) => (
+          <li>
+            <a href={enlace.href} class="enlace nav-enlace">{enlace.texto}</a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <a href={negocio.cta.href} class="boton boton-principal">
+      {negocio.cta.texto}
+    </a>
+
+  </Contenedor>
+</header>

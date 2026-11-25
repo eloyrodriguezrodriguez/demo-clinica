@@ -1,0 +1,27 @@
+---
+import "@fontsource-variable/lora";
+import "@fontsource-variable/inter";
+import "../styles/global.css";
+import Header from "../components/layout/Header.astro";
+import { negocio } from "../data/negocio";
+
+interface Props {
+  titulo?: string;
+}
+const { titulo = negocio.nombre } = Astro.props;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{titulo}</title>
+  </head>
+  <body>
+    <Header />
+    <main>
+      <slot />
+    </main>
+  </body>
+</html>
