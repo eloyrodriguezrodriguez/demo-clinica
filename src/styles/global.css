@@ -6,6 +6,9 @@
 @import "./components/confianza.css";
 @import "./components/sobre-nosotros.css";
 @import "./components/especialidades.css";
+@import "./components/equipo.css";
+@import "./components/resenas.css";
+@import "./components/cita.css";
 
 @theme {
   /* ── Paleta ── */
@@ -95,6 +98,11 @@
   /* ── Etiqueta encima del título de cada sección ── */
   .etiqueta {
     @apply text-sm font-semibold tracking-wide text-texto-suave;
+  }
+
+  /* ── Cabecera de sección: etiqueta + título ── */
+  .seccion-cabecera {
+    @apply mb-12 flex flex-col gap-3;
   }
 
   /* ════════ Comportamientos comunes ════════ */

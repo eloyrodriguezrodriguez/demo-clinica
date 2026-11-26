@@ -7,6 +7,8 @@ import react from '@astrojs/react';
 
 import icon from 'astro-icon';
 
+import vercel from '@astrojs/vercel';
+
 // https://astro.build/config
 export default defineConfig({
   server: { open: true },
@@ -15,5 +17,6 @@ export default defineConfig({
     plugins: [tailwindcss()]
   },
 
-  integrations: [react(), icon()]
+  integrations: [react(), icon()],
+  adapter: vercel()
 });

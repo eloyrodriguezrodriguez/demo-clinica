@@ -1,0 +1,107 @@
+/* ════════ Reseñas ════════ */
+/* Componente: src/components/sections/Resenas.astro */
+/* Dos modos: lista (móvil, sin JS o sin animaciones) y carrusel 3D (escritorio con GSAP) */
+
+@layer components {
+  .resenas {
+    @apply bg-franja py-seccion;
+  }
+
+  .resenas-contenido {
+    @apply grid items-center gap-12 md:grid-cols-[1fr_1.5fr];
+  }
+
+  /* ════ Columna izquierda ════ */
+
+  .resenas-info {
+    @apply flex flex-col items-start gap-6;
+  }
+
+  .resenas-info .seccion-cabecera {
+    @apply mb-0;
+  }
+
+  .resenas-resumen {
+    @apply flex items-center gap-4;
+  }
+
+  .resenas-nota {
+    @apply font-titulo text-5xl font-semibold text-primario;
+  }
+
+  .resenas-estrellas {
+    @apply flex gap-0.5 text-primario;
+  }
+
+  .resenas-total {
+    @apply mt-1 text-sm text-texto-suave;
+  }
+
+  .resenas-contador {
+    @apply hidden text-sm font-semibold tracking-wide text-texto-suave;
+  }
+
+  /* ════ Tarjeta de reseña en horizontal: autor a la izquierda, opinión a la derecha ════ */
+
+  .resena {
+    @apply grid gap-5 rounded-2xl border border-borde bg-superficie p-6 sm:grid-cols-[11rem_1fr] sm:gap-6;
+  }
+
+  .resena-autor {
+    @apply flex items-start gap-3 sm:flex-col sm:border-r sm:border-borde sm:pr-6;
+  }
+
+  .resena-inicial {
+    @apply flex size-12 shrink-0 items-center justify-center rounded-full bg-franja font-titulo text-xl font-semibold text-primario;
+  }
+
+  .resena-nombre {
+    @apply font-semibold text-texto;
+  }
+
+  .resena-detalle {
+    @apply text-sm text-texto-suave;
+  }
+
+  .resena-cuerpo {
+    @apply flex flex-col gap-3;
+  }
+
+  .resena-texto {
+    @apply text-lg leading-relaxed text-texto;
+  }
+
+  /* ════ Modo lista ════ */
+
+  .resenas-lista {
+    @apply flex flex-col gap-6;
+  }
+
+  /* ════ Modo carrusel 3D ════ */
+
+  /* Menos padding para que todo quepa en una pantalla mientras está fija */
+  .resenas-animado {
+    @apply py-franja;
+  }
+
+  .resenas-animado .resenas-contador {
+    @apply block;
+  }
+
+  /* El escenario da la profundidad: sin perspective no hay efecto 3D */
+  .resenas-animado .resenas-escenario {
+    @apply relative h-[min(70svh,34rem)];
+    perspective: 1400px;
+  }
+
+  .resenas-animado .resenas-lista {
+    @apply block h-full;
+    transform-style: preserve-3d;
+  }
+
+  /* Todas las tarjetas en el centro del escenario: GSAP las reparte en profundidad */
+  .resenas-animado .resena {
+    @apply absolute inset-x-0 top-1/2;
+    will-change: transform, opacity;
+  }
+}

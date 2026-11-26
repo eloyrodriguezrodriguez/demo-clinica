@@ -1,0 +1,161 @@
+/* ════════ Cita ════════ */
+/* Componente: src/components/sections/Cita.astro */
+/* Formulario: src/components/islands/FormularioCita.tsx */
+
+@layer components {
+  .cita {
+    @apply py-seccion;
+  }
+
+  .cita-contenido {
+    @apply grid items-start gap-12 md:grid-cols-[1fr_1.3fr];
+  }
+
+  /* ════ Columna izquierda ════ */
+
+  .cita-info {
+    @apply flex flex-col gap-6 md:sticky md:top-[calc(var(--altura-header)+2rem)];
+  }
+
+  .cita-info .seccion-cabecera {
+    @apply mb-0;
+  }
+
+  .cita-texto {
+    @apply max-w-[50ch] text-lg text-texto-suave;
+  }
+
+  .cita-contacto {
+    @apply flex flex-col gap-3 border-t border-borde pt-6;
+  }
+
+  .cita-contacto li {
+    @apply flex items-center gap-3;
+  }
+
+  .cita-contacto-icono {
+    @apply shrink-0 text-primario;
+  }
+
+  /* ════ Tarjeta del formulario ════ */
+
+  .cita-tarjeta {
+    @apply rounded-2xl border border-borde bg-superficie p-6 md:p-8;
+  }
+
+  .formulario {
+    @apply flex flex-col gap-6;
+  }
+
+  .formulario-paso {
+    @apply flex flex-col gap-3;
+  }
+
+  .formulario-leyenda {
+    @apply mb-1 font-semibold text-primario;
+  }
+
+  .formulario-ayuda {
+    @apply text-sm text-texto-suave;
+  }
+
+  /* ── Opciones tipo píldora (especialidad y hora) ── */
+
+  .opciones {
+    @apply flex flex-wrap gap-2;
+  }
+
+  .opciones-horas {
+    @apply grid grid-cols-4 sm:grid-cols-6;
+  }
+
+  .opcion {
+    @apply cursor-pointer;
+  }
+
+  /* El círculo del radio se oculta; se ve la píldora */
+  .opcion input {
+    @apply sr-only;
+  }
+
+  .opcion span {
+    @apply flex min-h-11 items-center justify-center rounded-full border border-borde px-4 text-sm font-medium text-texto;
+    transition:
+      background-color var(--duracion) var(--curva),
+      border-color var(--duracion) var(--curva),
+      color var(--duracion) var(--curva);
+  }
+
+  .opcion:hover span {
+    @apply border-primario;
+  }
+
+  .opcion input:checked + span {
+    @apply border-primario bg-primario text-white;
+  }
+
+  .opcion input:focus-visible + span {
+    outline: 2px solid var(--color-primario);
+    outline-offset: 3px;
+  }
+
+  /* ── Campos de texto ── */
+
+  .campos {
+    @apply grid gap-4 sm:grid-cols-2;
+  }
+
+  .campos .campo:first-child {
+    @apply sm:col-span-2;
+  }
+
+  .campo {
+    @apply flex flex-col gap-1.5;
+  }
+
+  .campo-etiqueta {
+    @apply text-sm font-medium text-texto;
+  }
+
+  .campo-control {
+    @apply min-h-11 rounded-xl border border-borde bg-fondo px-4 text-texto;
+    transition: border-color var(--duracion) var(--curva);
+  }
+
+  .campo-control:focus {
+    @apply border-primario outline-none;
+  }
+
+  /* ── Campo trampa: fuera de la vista, pero en el HTML ── */
+  .campo-trampa {
+    @apply absolute -left-[9999px] h-px w-px overflow-hidden;
+  }
+
+  /* ── Consentimiento ── */
+
+  .consentimiento {
+    @apply flex items-start gap-3 text-sm text-texto-suave;
+  }
+
+  .consentimiento input {
+    @apply mt-0.5 size-5 shrink-0 accent-primario;
+  }
+
+  /* ── Envío y resultado ── */
+
+  .formulario-error {
+    @apply rounded-xl bg-franja px-4 py-3 text-sm font-medium text-primario;
+  }
+
+  .formulario-boton {
+    @apply w-full sm:w-auto sm:self-start disabled:cursor-wait disabled:opacity-70;
+  }
+
+  .formulario-confirmacion {
+    @apply flex flex-col gap-2 py-8 text-center;
+  }
+
+  .formulario-confirmacion-titulo {
+    @apply font-titulo text-3xl font-semibold text-primario;
+  }
+}

@@ -4,6 +4,9 @@ import Hero from "../components/sections/Hero.astro";
 import Confianza from "../components/sections/Confianza.astro";
 import SobreNosotros from "../components/sections/SobreNosotros.astro";
 import Especialidades from "../components/sections/Especialidades.astro";
+import Equipo from "../components/sections/Equipo.astro";
+import Resenas from "../components/sections/Resenas.astro";
+import Cita from "../components/sections/Cita.astro";
 ---
 
 <BaseLayout>
@@ -13,9 +16,18 @@ import Especialidades from "../components/sections/Especialidades.astro";
     <Confianza />
   </div>
 
-  <!-- Pantalla 2 -->
+  <!-- Pantalla 2 · fondo claro -->
   <SobreNosotros />
 
-  <!-- Pantalla 3: se queda fija mientras entran las tarjetas -->
+  <!-- Pantalla 3 · fondo azul · se queda fija mientras entran las tarjetas -->
   <Especialidades />
+
+  <!-- Pantalla 4 · fondo claro · se queda fija mientras pasan los profesionales -->
+  <Equipo />
+
+  <!-- Pantalla 5 · fondo azul · carrusel 3D de reseñas -->
+  <Resenas />
+
+  <!-- Pantalla 6 · fondo claro · formulario de cita -->
+  <Cita />
 </BaseLayout>

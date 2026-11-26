@@ -7,13 +7,9 @@ import { negocio } from "../../data/negocio";
 const { especialidades, cta } = negocio;
 ---
 
-<section
-  id="especialidades"
-  class="especialidades pantalla"
-  aria-labelledby="especialidades-titulo"
->
+<section id="especialidades" class="especialidades pantalla" aria-labelledby="especialidades-titulo">
   <Contenedor>
-    <div class="especialidades-cabecera">
+    <div class="seccion-cabecera">
       <span class="etiqueta">{especialidades.etiqueta}</span>
       <h2 id="especialidades-titulo">{especialidades.titulo}</h2>
     </div>
@@ -37,20 +33,13 @@ const { especialidades, cta } = negocio;
           <ul class="especialidad-motivos">
             {esp.motivos.map((motivo) => (
               <li>
-                <Icon
-                  name="tabler:check"
-                  size={18}
-                  aria-hidden="true"
-                  class="especialidad-check"
-                />
+                <Icon name="tabler:check" size={18} aria-hidden="true" class="especialidad-check" />
                 {motivo}
               </li>
             ))}
           </ul>
 
-          <a href={cta.href} class="enlace especialidad-enlace">
-            Pedir cita
-          </a>
+          <a href={cta.href} class="enlace especialidad-enlace">Pedir cita</a>
         </article>
       ))}
     </div>
@@ -65,25 +54,18 @@ const { especialidades, cta } = negocio;
 
   // Lee la altura de la navbar desde el CSS (--altura-header) en píxeles
   const alturaHeader = () =>
-    parseFloat(
-      getComputedStyle(document.documentElement).getPropertyValue(
-        "--altura-header",
-      ),
-    ) * 16;
+    parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--altura-header")) * 16;
 
   const mm = gsap.matchMedia();
 
   mm.add(
     {
-      escritorio: "(min-width: 768px)",
-      movil: "(max-width: 767px)",
+      escritorio: "(min-width: 768px) and (prefers-reduced-motion: no-preference)",
+      movil: "(max-width: 767px) and (prefers-reduced-motion: no-preference)",
     },
     (contexto) => {
       const { escritorio } = contexto.conditions as { escritorio: boolean };
-      console.log(
-        "Animación de especialidades activa. ¿Escritorio?",
-        escritorio,
-      );
+
       if (escritorio) {
         // La sección se queda fija bajo la navbar y las tarjetas entran con el scroll
         const tl = gsap.timeline({
@@ -97,20 +79,10 @@ const { especialidades, cta } = negocio;
           },
         });
 
-        tl.from(".especialidad", {
-          y: 120,
-          opacity: 0,
-          stagger: 0.3,
-          ease: "none",
-        }).from(
+        tl.from(".especialidad", { y: 120, opacity: 0, stagger: 0.3, ease: "none" }).from(
           ".especialidad-imagen",
-          {
-            clipPath: "inset(100% 0% 0% 0%)",
-            scale: 1.15,
-            stagger: 0.3,
-            ease: "none",
-          },
-          0.1,
+          { clipPath: "inset(100% 0% 0% 0%)", scale: 1.15, stagger: 0.3, ease: "none" },
+          0.1
         );
       } else {
         // En el móvil las tarjetas van una debajo de otra: cada una entra al aparecer
@@ -119,15 +91,10 @@ const { especialidades, cta } = negocio;
             y: 60,
             opacity: 0,
             ease: "none",
-            scrollTrigger: {
-              trigger: tarjeta,
-              start: "top 90%",
-              end: "top 60%",
-              scrub: true,
-            },
+            scrollTrigger: { trigger: tarjeta, start: "top 90%", end: "top 60%", scrub: true },
           });
         });
       }
-    },
+    }
   );
 </script>

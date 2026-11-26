@@ -6,10 +6,6 @@
     @apply bg-franja py-seccion;
   }
 
-  .especialidades-cabecera {
-    @apply mb-12 flex flex-col gap-3;
-  }
-
   .especialidades-lista {
     @apply grid gap-6 md:grid-cols-3;
   }

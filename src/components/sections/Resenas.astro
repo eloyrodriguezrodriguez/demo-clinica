@@ -1,0 +1,142 @@
+---
+import { Icon } from "astro-icon/components";
+import Contenedor from "../ui/Contenedor.astro";
+import { negocio } from "../../data/negocio";
+
+const { resenas, cta } = negocio;
+const total = String(resenas.lista.length).padStart(2, "0");
+const cinco = [1, 2, 3, 4, 5];
+---
+
+<section id="resenas" class="resenas pantalla" aria-labelledby="resenas-titulo">
+  <Contenedor class="resenas-contenido">
+
+    <!-- Izquierda: título, nota de Google y acción -->
+    <div class="resenas-info">
+      <div class="seccion-cabecera">
+        <span class="etiqueta">{resenas.etiqueta}</span>
+        <h2 id="resenas-titulo">{resenas.titulo}</h2>
+      </div>
+
+      <div class="resenas-resumen">
+        <p class="resenas-nota">{resenas.valoracion}</p>
+        <div>
+          <div class="resenas-estrellas" role="img" aria-label={`Valoración media de ${resenas.valoracion} sobre 5`}>
+            {cinco.map(() => <Icon name="tabler:star-filled" size={18} aria-hidden="true" />)}
+          </div>
+          <p class="resenas-total">
+            {resenas.total} opiniones en
+            <a href={resenas.enlaceGoogle} class="enlace" target="_blank" rel="noopener">Google</a>
+          </p>
+        </div>
+      </div>
+
+      <a href={cta.href} class="boton boton-principal resenas-boton">{cta.texto}</a>
+
+      <p class="resenas-contador" aria-hidden="true">
+        <span class="resenas-actual">01</span> / {total}
+      </p>
+    </div>
+
+    <!-- Derecha: el carrusel 3D de reseñas -->
+    <div class="resenas-escenario">
+      <ul class="resenas-lista">
+        {resenas.lista.map((resena) => (
+          <li class="resena">
+            <div class="resena-autor">
+              <span class="resena-inicial" aria-hidden="true">{resena.nombre.charAt(0)}</span>
+              <div>
+                <p class="resena-nombre">{resena.nombre}</p>
+                <p class="resena-detalle">{resena.especialidad}</p>
+                <p class="resena-detalle">{resena.fecha}</p>
+              </div>
+            </div>
+
+            <div class="resena-cuerpo">
+              <div class="resenas-estrellas" role="img" aria-label={`${resena.estrellas} de 5 estrellas`}>
+                {cinco.map((n) => (
+                  <Icon
+                    name={n <= resena.estrellas ? "tabler:star-filled" : "tabler:star"}
+                    size={16}
+                    aria-hidden="true"
+                  />
+                ))}
+              </div>
+              <blockquote class="resena-texto">
+                <p>“{resena.texto}”</p>
+              </blockquote>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+  </Contenedor>
+</section>
+
+<script>
+  import gsap from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Lee la altura de la navbar desde el CSS (--altura-header) en píxeles
+  const alturaHeader = () =>
+    parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--altura-header")) * 16;
+
+  const mm = gsap.matchMedia();
+
+  mm.add("(min-width: 768px) and (prefers-reduced-motion: no-preference)", () => {
+    const seccion = document.querySelector<HTMLElement>(".resenas")!;
+    const tarjetas = gsap.utils.toArray<HTMLElement>(".resena");
+    const actual = document.querySelector<HTMLElement>(".resenas-actual")!;
+    const ultima = tarjetas.length - 1;
+
+    // Modo carrusel: las tarjetas se superponen en un escenario 3D
+    seccion.classList.add("resenas-animado");
+
+    // Coloca cada tarjeta según su distancia a la reseña activa.
+    // distancia 0 = delante; positiva = abajo y al fondo; negativa = arriba y al fondo
+    const colocar = (posicion: number) => {
+      tarjetas.forEach((tarjeta, i) => {
+        const distancia = i - posicion;
+        const lejania = Math.abs(distancia);
+
+        gsap.set(tarjeta, {
+          yPercent: -50 + distancia * 70,
+          z: -lejania * 220,
+          rotationX: -distancia * 16,
+          opacity: Math.max(0, 1 - lejania * 0.45),
+          zIndex: 100 - Math.round(lejania * 10),
+          pointerEvents: lejania < 0.5 ? "auto" : "none",
+        });
+      });
+
+      actual.textContent = String(Math.round(posicion) + 1).padStart(2, "0");
+    };
+
+    colocar(0);
+
+    // Un objeto "posición" que va de 0 a la última reseña según el scroll
+    const estado = { posicion: 0 };
+
+    gsap.to(estado, {
+      posicion: ultima,
+      ease: "none",
+      onUpdate: () => colocar(estado.posicion),
+      scrollTrigger: {
+        trigger: seccion,
+        start: () => `top ${alturaHeader()}`,
+        end: () => `+=${ultima * 60}%`,
+        scrub: 0.6,
+        pin: true,
+        invalidateOnRefresh: true,
+        // Al soltar el scroll, se detiene en la reseña más cercana
+        snap: { snapTo: 1 / ultima, duration: 0.4, ease: "power1.out" },
+      },
+    });
+
+    // Al salir del modo escritorio, vuelve al modo lista
+    return () => seccion.classList.remove("resenas-animado");
+  });
+</script>

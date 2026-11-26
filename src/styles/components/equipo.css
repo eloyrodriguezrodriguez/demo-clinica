@@ -1,0 +1,95 @@
+/* ════════ Equipo ════════ */
+/* Componente: src/components/sections/Equipo.astro */
+/* Dos modos: lista (móvil, sin JS o sin animaciones) y presentación (escritorio con GSAP) */
+
+@layer components {
+  .equipo {
+    @apply py-seccion;
+  }
+
+  .equipo-escenario {
+    @apply grid items-center gap-12 md:grid-cols-[1.2fr_1fr];
+  }
+
+  /* ════ Modo lista ════ */
+
+  .equipo-textos {
+    @apply flex flex-col gap-16;
+  }
+
+  .miembro-texto {
+    @apply flex flex-col gap-4;
+  }
+
+  .miembro-foto-lista {
+    @apply aspect-[4/3] w-full max-w-md rounded-2xl object-cover object-top;
+  }
+
+  .equipo-fotos {
+    @apply hidden;
+  }
+
+  /* ════ Modo presentación ════ */
+
+  /* Menos padding para que título, texto y tarjeta quepan en una pantalla mientras está fija */
+  .equipo-animado {
+    @apply py-franja;
+  }
+
+  .equipo-animado .equipo-textos {
+    display: grid;
+  }
+
+  /* Los tres textos ocupan la misma celda: GSAP muestra uno cada vez */
+  .equipo-animado .miembro-texto {
+    grid-area: 1 / 1;
+  }
+
+  .equipo-animado .miembro-foto-lista {
+    display: none;
+  }
+
+  .equipo-animado .equipo-fotos {
+    @apply flex flex-col items-end gap-4;
+  }
+
+  /* La altura se limita a la pantalla para que nunca se corte mientras la sección está fija */
+  .equipo-tarjeta {
+    @apply relative aspect-[4/5] h-[min(58svh,30rem)] overflow-hidden rounded-2xl border border-borde bg-superficie;
+  }
+
+  .miembro-foto {
+    @apply absolute inset-0 size-full object-cover object-top;
+  }
+
+  .equipo-contador {
+    @apply text-sm font-semibold tracking-wide text-texto-suave;
+  }
+
+  /* ════ Texto de cada profesional ════ */
+
+  .miembro-rol {
+    @apply text-sm font-semibold text-primario;
+  }
+
+  /* El nombre es el protagonista: tamaño de h2 aunque sea un h3 */
+  .miembro-nombre {
+    font-size: clamp(2rem, 3.5vw, 2.75rem);
+  }
+
+  .miembro-detalle {
+    @apply flex max-w-[55ch] flex-col gap-1;
+  }
+
+  .miembro-subtitulo {
+    @apply text-sm font-semibold text-texto;
+  }
+
+  .miembro-parrafo {
+    @apply text-texto-suave;
+  }
+
+  .miembro-enlace {
+    @apply self-start font-medium text-primario;
+  }
+}

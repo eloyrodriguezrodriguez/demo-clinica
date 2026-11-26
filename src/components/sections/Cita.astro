@@ -1,0 +1,43 @@
+---
+import { Icon } from "astro-icon/components";
+import Contenedor from "../ui/Contenedor.astro";
+import FormularioCita from "../islands/FormularioCita.tsx";
+import { negocio } from "../../data/negocio";
+
+const { cita, contacto } = negocio;
+---
+
+<section id="cita" class="cita pantalla" aria-labelledby="cita-titulo">
+  <Contenedor class="cita-contenido">
+
+    <!-- Izquierda: invitación y otras formas de contacto -->
+    <div class="cita-info">
+      <div class="seccion-cabecera">
+        <span class="etiqueta">{cita.etiqueta}</span>
+        <h2 id="cita-titulo">{cita.titulo}</h2>
+      </div>
+      <p class="cita-texto">{cita.texto}</p>
+
+      <ul class="cita-contacto">
+        <li>
+          <Icon name="tabler:phone" size={20} aria-hidden="true" class="cita-contacto-icono" />
+          <span>¿Prefieres llamar? <a href={`tel:${contacto.telefono.replace(/\s/g, "")}`} class="enlace">{contacto.telefono}</a></span>
+        </li>
+        <li>
+          <Icon name="tabler:map-pin" size={20} aria-hidden="true" class="cita-contacto-icono" />
+          <span>{contacto.direccion}</span>
+        </li>
+        <li>
+          <Icon name="tabler:clock" size={20} aria-hidden="true" class="cita-contacto-icono" />
+          <span>{contacto.horario}</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Derecha: el formulario (isla de React, se carga al llegar a la sección) -->
+    <div class="cita-tarjeta">
+      <FormularioCita client:visible />
+    </div>
+
+  </Contenedor>
+</section>

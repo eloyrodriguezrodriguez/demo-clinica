@@ -1,0 +1,129 @@
+---
+import { Image } from "astro:assets";
+import Contenedor from "../ui/Contenedor.astro";
+import { negocio } from "../../data/negocio";
+
+const { equipo, cta } = negocio;
+const total = String(equipo.miembros.length).padStart(2, "0");
+---
+
+<section id="equipo" class="equipo pantalla" aria-labelledby="equipo-titulo">
+  <Contenedor>
+    <div class="seccion-cabecera">
+      <span class="etiqueta">{equipo.etiqueta}</span>
+      <h2 id="equipo-titulo">{equipo.titulo}</h2>
+    </div>
+
+    <div class="equipo-escenario">
+
+      <!-- Izquierda: el texto de cada profesional -->
+      <div class="equipo-textos">
+        {equipo.miembros.map((miembro) => (
+          <article class="miembro-texto">
+            <!-- Foto propia: solo se ve en modo lista (móvil, sin JS o sin animaciones) -->
+            <Image
+              src={miembro.imagen}
+              alt={`${miembro.nombre}, ${miembro.especialidad} en ${negocio.nombre}`}
+              widths={[400, 640]}
+              sizes="100vw"
+              class="miembro-foto-lista"
+            />
+
+            <p class="miembro-rol">{miembro.especialidad} · Nº col. {miembro.colegiado}</p>
+            <h3 class="miembro-nombre">{miembro.nombre}</h3>
+
+            <div class="miembro-detalle">
+              <p class="miembro-subtitulo">Experiencia</p>
+              <p class="miembro-parrafo">{miembro.experiencia}</p>
+            </div>
+
+            <div class="miembro-detalle">
+              <p class="miembro-subtitulo">Cómo trabaja</p>
+              <p class="miembro-parrafo">{miembro.metodo}</p>
+            </div>
+
+            <a href={cta.href} class="enlace miembro-enlace">Pedir cita</a>
+          </article>
+        ))}
+      </div>
+
+      <!-- Derecha: la tarjeta con las fotos (solo en modo presentación) -->
+      <div class="equipo-fotos" aria-hidden="true">
+        <div class="equipo-tarjeta">
+          {equipo.miembros.map((miembro) => (
+            <Image
+              src={miembro.imagen}
+              alt=""
+              widths={[480, 720]}
+              sizes="33vw"
+              class="miembro-foto"
+            />
+          ))}
+        </div>
+        <p class="equipo-contador">
+          <span class="equipo-actual">01</span> / {total}
+        </p>
+      </div>
+
+    </div>
+  </Contenedor>
+</section>
+
+<script>
+  import gsap from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Lee la altura de la navbar desde el CSS (--altura-header) en píxeles
+  const alturaHeader = () =>
+    parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--altura-header")) * 16;
+
+  const mm = gsap.matchMedia();
+
+  mm.add("(min-width: 768px) and (prefers-reduced-motion: no-preference)", () => {
+    const seccion = document.querySelector<HTMLElement>(".equipo")!;
+    const textos = gsap.utils.toArray<HTMLElement>(".miembro-texto");
+    const fotos = gsap.utils.toArray<HTMLElement>(".equipo-tarjeta .miembro-foto");
+    const actual = document.querySelector<HTMLElement>(".equipo-actual")!;
+    const pasos = textos.length - 1;
+
+    // Modo presentación: textos superpuestos y tarjeta de fotos visible
+    seccion.classList.add("equipo-animado");
+
+    // Estado inicial: solo se ve el primer profesional
+    gsap.set(textos.slice(1), { autoAlpha: 0, y: 40 });
+    gsap.set(fotos.slice(1), { clipPath: "inset(100% 0% 0% 0%)" });
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: seccion,
+        start: () => `top ${alturaHeader()}`,
+        end: () => `+=${pasos * 100}%`,
+        scrub: true,
+        pin: true,
+        invalidateOnRefresh: true,
+        onUpdate: (self) => {
+          const indice = Math.round(self.progress * pasos);
+          actual.textContent = String(indice + 1).padStart(2, "0");
+        },
+      },
+    });
+
+    // A partir del segundo profesional: sale el texto anterior,
+    // entra el nuevo y su foto se revela de abajo arriba
+    textos.forEach((texto, i) => {
+      if (i === 0) return;
+      const inicio = i - 1;
+      tl.to(textos[i - 1], { autoAlpha: 0, y: -40, duration: 0.4 }, inicio + 0.2)
+        .to(texto, { autoAlpha: 1, y: 0, duration: 0.4 }, inicio + 0.5)
+        .to(fotos[i], { clipPath: "inset(0% 0% 0% 0%)", duration: 0.9, ease: "none" }, inicio);
+    });
+
+    // Pausa al final para leer el último antes de soltar la sección
+    tl.to({}, { duration: 0.3 });
+
+    // Al salir del modo escritorio, vuelve al modo lista
+    return () => seccion.classList.remove("equipo-animado");
+  });
+</script>
