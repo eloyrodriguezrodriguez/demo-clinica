@@ -2,8 +2,9 @@
 /* Componente: src/components/layout/Header.astro */
 
 @layer components {
+  /* Fija arriba: siempre visible al hacer scroll */
   .header {
-    @apply border-b border-borde bg-fondo;
+    @apply sticky top-0 z-50 border-b border-borde bg-fondo/90 backdrop-blur;
   }
 
   .header-contenido {

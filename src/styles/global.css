@@ -5,6 +5,7 @@
 @import "./components/hero.css";
 @import "./components/confianza.css";
 @import "./components/sobre-nosotros.css";
+@import "./components/especialidades.css";
 
 @theme {
   /* ── Paleta ── */
@@ -32,13 +33,15 @@
     --altura-header: 5rem;
     --elevacion: -2px;
     --duracion: 250ms;
+    --duracion-entrada: 600ms;
     --curva: cubic-bezier(0.22, 1, 0.36, 1);
     --sombra-hover: 0 6px 16px -6px rgb(30 58 95 / 0.35);
   }
 
   html {
     scroll-behavior: smooth;
-    scroll-padding-top: calc(var(--altura-header) + 1rem);
+    /* La sección encaja justo debajo de la navbar fija */
+    scroll-padding-top: var(--altura-header);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -52,10 +55,6 @@
     color: var(--color-texto);
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
-  }
-    /* ── Etiqueta encima del título de cada sección ── */
-  .etiqueta {
-    @apply text-sm font-semibold tracking-wide text-texto-suave;
   }
 
   /* Escala de títulos: una sola para toda la web */
@@ -86,6 +85,18 @@
 }
 
 @layer components {
+  /* ════════ Estructura ════════ */
+
+  /* ── Sección a pantalla completa bajo la navbar ── */
+  .pantalla {
+    @apply flex min-h-[calc(100svh-var(--altura-header))] flex-col justify-center;
+  }
+
+  /* ── Etiqueta encima del título de cada sección ── */
+  .etiqueta {
+    @apply text-sm font-semibold tracking-wide text-texto-suave;
+  }
+
   /* ════════ Comportamientos comunes ════════ */
 
   /* ── Botones: suben al pasar el ratón ── */
@@ -103,13 +114,15 @@
   /* ── Iconos: mismo movimiento que los botones ── */
   .icono {
     display: inline-flex;
-    transition: transform var(--duracion) var(--curva);
+    transition:
+      transform var(--duracion) var(--curva),
+      box-shadow var(--duracion) var(--curva);
   }
 
   @media (hover: hover) {
     .boton:hover {
       transform: translateY(var(--elevacion));
-      box-shadow: 0 6px 16px -6px rgb(30 58 95 / 0.35);
+      box-shadow: var(--sombra-hover);
     }
     .icono:hover,
     .grupo-icono:hover .icono {

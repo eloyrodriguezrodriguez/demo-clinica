@@ -2,9 +2,20 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Hero from "../components/sections/Hero.astro";
 import Confianza from "../components/sections/Confianza.astro";
+import SobreNosotros from "../components/sections/SobreNosotros.astro";
+import Especialidades from "../components/sections/Especialidades.astro";
 ---
 
 <BaseLayout>
-  <Hero />
-  <Confianza />
+  <!-- Pantalla 1: hero + franja de confianza, juntos ocupan la pantalla -->
+  <div class="pantalla">
+    <Hero />
+    <Confianza />
+  </div>
+
+  <!-- Pantalla 2 -->
+  <SobreNosotros />
+
+  <!-- Pantalla 3: se queda fija mientras entran las tarjetas -->
+  <Especialidades />
 </BaseLayout>

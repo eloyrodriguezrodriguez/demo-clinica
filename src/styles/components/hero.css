@@ -1,21 +1,23 @@
 /* ════════ Hero ════════ */
-/* Componente: src/components/secciones/Hero.astro */
+/* Componente: src/components/sections/Hero.astro */
+/* Comparte la primera pantalla con la franja de confianza (ver index.astro) */
 
 @layer components {
+  /* Ocupa todo el espacio que deja libre la franja de confianza */
   .hero {
-    @apply py-seccion;
+    @apply flex flex-1 items-center py-franja;
   }
 
-  .hero-titulo {
-    text-wrap: pretty;
-  }
-  
   .hero-contenido {
     @apply grid items-center gap-12 md:grid-cols-[2fr_1fr];
   }
 
   .hero-texto {
     @apply flex flex-col gap-6;
+  }
+
+  .hero-titulo {
+    text-wrap: pretty;
   }
 
   .hero-subtitulo {
@@ -35,17 +37,17 @@
     transition: transform var(--duracion) var(--curva);
   }
 
-  .hero-media {
-    @apply w-full max-w-md md:justify-self-end;
-  }
-
-  .hero-imagen {
-    @apply aspect-[4/5] w-full rounded-2xl object-cover;
-  }
-
   @media (hover: hover) {
     .hero-enlace:hover .hero-enlace-icono {
       transform: translateX(3px);
     }
+  }
+
+  .hero-media {
+    @apply w-full max-w-sm md:justify-self-end;
+  }
+
+  .hero-imagen {
+    @apply aspect-[4/5] w-full rounded-2xl object-cover;
   }
 }

@@ -1,0 +1,54 @@
+/* ════════ Especialidades ════════ */
+/* Componente: src/components/sections/Especialidades.astro */
+
+@layer components {
+  .especialidades {
+    @apply bg-franja py-seccion;
+  }
+
+  .especialidades-cabecera {
+    @apply mb-12 flex flex-col gap-3;
+  }
+
+  .especialidades-lista {
+    @apply grid gap-6 md:grid-cols-3;
+  }
+
+  /* Subgrid: las cinco partes de las tres tarjetas quedan alineadas */
+  .especialidad {
+    @apply grid grid-rows-subgrid row-span-5 gap-4 rounded-2xl border border-borde bg-superficie p-6;
+  }
+
+  .especialidad-media {
+    @apply overflow-hidden rounded-xl;
+  }
+
+  .especialidad-imagen {
+    @apply aspect-[4/3] w-full object-cover;
+  }
+
+  .especialidad-titulo {
+    @apply text-xl;
+  }
+
+  .especialidad-texto {
+    @apply text-texto-suave;
+  }
+
+  .especialidad-motivos {
+    @apply flex flex-col gap-2 text-sm;
+  }
+
+  .especialidad-motivos li {
+    @apply flex items-center gap-2;
+  }
+
+  .especialidad-check {
+    @apply shrink-0 text-primario;
+  }
+
+  /* El enlace siempre al fondo de la tarjeta, al mismo nivel en las tres */
+  .especialidad-enlace {
+    @apply self-end justify-self-start font-medium text-primario;
+  }
+}
